@@ -1,0 +1,21 @@
+.navbar {
+    background-color: white;
+    overflow: hidden;
+    text-align: center;
+    padding: 0;
+}
+
+.navbar a {
+    display: inline-block;
+    color: lightpink;
+    text-decoration: none;
+    padding: 14px 20px;
+    font-size: 18px;
+    font-family: 'Alegreya', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: white; 
+    color: lightpink;
+}
