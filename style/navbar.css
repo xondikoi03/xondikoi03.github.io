@@ -1,23 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 body {
   margin: 0;
-  font-family: 'Alegreya', serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .navbar {
-  background-color: #007BFF; /* Blue background */
+  background-color: rgb(241, 175, 185); /* Blue background */
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 2rem;
+  padding: 1.25rem 2rem;
 }
 
 .navbar-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .navbar-buttons {
   display: flex;
+  align-items: flex-end;
   gap: 1rem;
 }
 
