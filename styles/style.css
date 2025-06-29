@@ -325,7 +325,7 @@ body {
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
-    text-align: center;
+    text-align: left;
   }
 
   .hero-text {
@@ -334,12 +334,12 @@ body {
   }
 
   .profile-pic {
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
   }
 
   .cta-buttons {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 1rem;
   }
