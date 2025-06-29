@@ -19,7 +19,7 @@ body {
   --secondary: #FFDAC1;
   --accent: #C7CEEA;
   --navbar: rgba(251, 244, 219, 0.645);
-  --text-dark: #333;
+  --text-dark: #444;
   --white: #FFFFFF;
   --hover: #644aad;
   --background_color: rgba(199, 230, 173, 0.237);
@@ -65,6 +65,19 @@ body {
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  color: #444;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #555;
+}
+
 .hero-content {
   display: flex;
   align-items: center;
@@ -97,7 +110,7 @@ body {
   font-size: 2.8rem;
   margin-bottom: 1rem;
   font-weight: 800;
-  color: #444;
+  color: var(--text-dark);
 }
 
 .hero-text p {
@@ -105,7 +118,7 @@ body {
   font-size: 1.1rem;
   font-weight: 400;
   text-align: justify;
-  color: #555;
+  color: var(--text-dark);
 }
 
 .hero-text a {
@@ -131,7 +144,7 @@ body {
 .cta-buttons {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.0rem;
   margin: 2rem auto 4rem;
   padding: 1rem;
 }
@@ -139,7 +152,7 @@ body {
 .cta-button {
   text-decoration: none;
   background-color: var(--navbar);
-  color: #2e2e2e;
+  color: var(--text-dark);
   padding: 0.8rem 1.8rem;
   font-weight: 600;
   font-size: 1rem;
@@ -157,4 +170,51 @@ body {
 .cta-button.secondary {
   background-color: #dcdcdc;
   color: #333;
+}
+
+/* Section Works */
+
+.Works {
+    text-align: justify;
+    max-width: 1000px;
+    padding: 0 1rem; /* Add horizontal space */
+    margin: 0 auto; 
+
+}
+
+.Works-text {
+  max-width: 1000px;
+  text-align: justify;
+}
+
+.Works-text h2 {
+    font-size: 2rem;
+    color: var(--text-dark);
+
+}
+
+.Works-text p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.Works a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.site-footer {
+  text-align: center;
+  margin-bottom: 0 auto;
+  padding: 2px 2px;
+  background: linear-gradient(45deg, var(--primary), var(--secondary)); 
+  color: var(--text-dark);
+  font-size: 14px;
+  text-align: center;
+  border-top: 2px solid rgba(0, 0, 0, 0.05);
+  margin-top: 3rem;
+  font-weight: 600;
 }
