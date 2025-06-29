@@ -15,10 +15,10 @@ body {
 
 /* Material pastel-inspired colors */
 :root {
-  --primary: #B5EAD7;
-  --secondary: #FFDAC1;
+  --primary: #c0b5ea;
+  --secondary: #e7dbfa;
   --accent: #C7CEEA;
-  --navbar: rgba(251, 244, 219, 0.645);
+  --navbar: rgba(225, 219, 251, 0.645);
   --text-dark: #444;
   --white: #FFFFFF;
   --hover: #644aad;
@@ -32,7 +32,7 @@ body {
   margin: 0 auto;
   max-width: 100%;;
   border-radius: 0;
-  background: linear-gradient(45deg, var(--primary), var(--secondary)); /* translucent pastel */
+  background: linear-gradient(270deg, var(--primary), var(--secondary)); /* translucent pastel */
   backdrop-filter: blur(10px); /* frosted glass */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   transition: background 0.3s ease-in-out;
@@ -139,12 +139,35 @@ body {
   line-height: 1.6;
 }
 
+/* Education list styles */
+
+.edu-list {
+  list-style: none;
+  padding: 2px;
+  margin-top: 2px;
+}
+
+.edu-list li {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: var(--text-dark);
+}
+
+.edu-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  margin-right: 15px;
+}
+
+
 /* Button styles */
 
 .cta-buttons {
   display: flex;
   justify-content: center;
-  gap: 1.0rem;
+  gap: 2.0rem;
   margin: 2rem auto 4rem;
   padding: 1rem;
 }
@@ -188,7 +211,7 @@ body {
 }
 
 .Works-text h2 {
-    font-size: 2rem;
+    font-size: 35px;
     color: var(--text-dark);
 
 }
@@ -199,14 +222,22 @@ body {
     color: var(--text-dark);
 }
 
-.Works a {
+.Works-text a {
     color: var(--accent);
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
 }
 
+.Works-text a:hover {
+  color: var(--hover); /* Slightly darker on hover */
+}
+
 .site-footer {
+  /* position: fixed; */
+  bottom: 0;
+  left: 0;
+  width: 100%;
   text-align: center;
   margin-bottom: 0 auto;
   padding: 2px 2px;
@@ -217,4 +248,5 @@ body {
   border-top: 2px solid rgba(0, 0, 0, 0.05);
   margin-top: 3rem;
   font-weight: 600;
+  z-index: 100;
 }
