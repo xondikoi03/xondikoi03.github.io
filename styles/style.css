@@ -233,6 +233,18 @@ body {
   color: var(--hover); /* Slightly darker on hover */
 }
 
+.Works-list {
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Works-list li {
+  align-items: left;
+  font-size: 18px;
+  color: var(--text-dark);
+}
+
 .site-footer {
   /* position: fixed; */
   bottom: 0;
