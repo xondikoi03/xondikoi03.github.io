@@ -632,23 +632,6 @@ body {
     height: 180px;
   }
 
-  .cta-buttons {
-    flex-direction: row;
-    max-width: 100%;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .cta-button {
-    font-size: 0.85rem;
-    padding: 0.5rem 1rem;
-  }
-  
-  .cta-button i {
-    font-size: 0.9rem; /* or 12-13px */
-    margin-right: 0.3rem;
-  }
-
   .projects-grid {
     flex-direction: column;
     align-items: center;
@@ -686,6 +669,23 @@ body {
     display: inline-block;
     margin: 0.3rem;
     padding: 0.5rem 1rem;
+  }
+
+    .cta-buttons {
+    flex-direction: row;
+    max-width: 100%;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  
+  .cta-button {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .cta-button i {
+    font-size: 0.9rem; /* or 12-13px */
+    margin-right: 0.1rem;
   }
 
   .hero h1 {
