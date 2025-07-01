@@ -225,7 +225,7 @@ body {
 
 .cta-buttons {
   display: flex;                     /* use flex for responsiveness */
-  flex-wrap: wrap;                  /* wrap buttons if space is tight */
+  flex-wrap: nowrap;                  /* wrap buttons if space is tight */
   justify-content: center;
   gap: 1.5rem;
   margin: 2rem auto 4rem;
@@ -622,6 +622,24 @@ body {
     text-align: left;
   }
 
+  .cta-buttons {
+    flex-wrap: nowrap;
+    flex-direction: row;
+    max-width: 100%;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  
+  .cta-button {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .cta-button i {
+    font-size: 0.9rem; /* or 12-13px */
+    margin-right: 0.1rem;
+  }
+
   .hero-text {
     text-align: center;
     max-width: 100%;
@@ -669,23 +687,6 @@ body {
     display: inline-block;
     margin: 0.3rem;
     padding: 0.5rem 1rem;
-  }
-
-    .cta-buttons {
-    flex-direction: row;
-    max-width: 100%;
-    align-items: center;
-    gap: 0.65rem;
-  }
-  
-  .cta-button {
-    font-size: 0.85rem;
-    padding: 0.5rem 0.75rem;
-  }
-  
-  .cta-button i {
-    font-size: 0.9rem; /* or 12-13px */
-    margin-right: 0.1rem;
   }
 
   .hero h1 {
