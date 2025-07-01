@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Documentation</title>
+        <link rel="stylesheet" href="styles/style.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+        <script>
+            window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+            };
+        </script>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar">
+            <div class="logo"><a href="index.html">@xondikoi</a></div>
+            <div class="nav-buttons">
+                <a href="projects.html"> Projects </a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+            </nav>
+        </header>
+        
+       <section class="wiki-layout" id="pipeline">
+            <aside class="wiki-sidebar">
+                <h3>Contents</h3>
+                <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#design">Pipeline Design</a></li>
+                <ul>
+                    <li><a href="#edAnalyzer1">EDAnalyzer: AOD2FunAOD</a></li>
+                    <li><a href="#edAnalyzer2">EDAnalyzer: miniAOD2FunAOD</a></li>
+                    <li><a href="#cms-config">CMS configuration files</a></li>
+                    <li><a href="#funAOD">The flat Ntuple: FunAOD</a></li>
+                </ul>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#setup">Setup and Installation</a></li>
+                    <ul> 
+                        <li> <a href="#c532">Setting up the Docker container: CMSSW_5_3_32</a></li>
+                        <li> <a href="#c767">Setting up the Docker container: CMSSW_7_6_7 </a></li>
+
+                    </ul>
+                <li><a href="#usage"> Usage and Application</a></li>
+                    <ul> 
+                        <li> <a href="#fetch"> Setting up the pipeline </a></li>
+                        <li><a href="#makeFun"> Making a FunAOD</a></li>
+                        <li><a href="#example"> Example Analysis</a></li>
+                    </ul>
+                </ul>
+            </aside>
+
+            <article class="wiki-content">
+                <h2 id="pipeline-intro">CMS-OpenData-Pipeline Wiki</h2>
+                <h3 id="overview"> Overview </h3>
+                <p><a href="opendata.cern.ch" alt="opendata">CMS Open Data</a> has immense potential for the researchers outside the collaboration. They can exploit the scientific potential of these data and also test out novel ideas with an actual detector setup. CMS Open Data includes collision as well as their simulated datasets, which allows researchers to perform different analyses and even search for new physics. The collaboration can also test out novel ideas and improve the current methods of particle detection and reconstruction.</p>
+
+                <br>
+
+                <p>Majority of primary datasets of CMS Open Data are in the AOD or miniAOD format. AOD has an unique data structure which stores a lot of information from proton-proton collisions, some of which might not be required for a specific physics analyses. miniAOD has a simpler structure than AOD but still contains a lot of high-level information. This makes it difficult for someone outside the collaboration to work with the AOD or the miniAOD sturcture and perform analyses. AODs retain a large amount of low level information necessary for development of algorithms. Typically in analysis level nanoAODs are preferred.</p>
+
+                <br>
+
+                <p>Our pipeline aims to deliver a much simpler format, the FunAOD, which is similar to nanoAOD in structure, a flat Ntuple, but has even lesser information due to it's focus on optimizing size and analysis speed. It only contains the necessary observables for higher level physics objects. But if one wishes, they can add more information by modifying the EDAnalyzer. As the name suggests, our aim is to make particle physics fun.</p>
+
+                <h3 id="design"> Pipeline Design </h3>
+                <div style="text-align: center;">
+                    <img src="resources/Flowchart.png" alt="Pipeline Flowchart" style="height: 500px;">
+                </div>
+
+                <p>
+                    <ul>
+                        <li> The pipeline consists of a AOD for Run 1 and miniAOD for Run 2 as an input file. </li>
+                        <li> An EDAnalyzer module is written to write out all the necessary information required for the physics analysis to a flat Ntuple file called <a href="#funAOD">FunAOD</a> that can be used for further physics analysis. </li>
+                        <li>A CMS configuration file loads all the required modules necessary for producing the FunAOD. </li>
+                    </ul>   
+                </p>
+
+                <h4 id="edAnalyzer1"> EDAnalyzer: AOD2FunAOD </h4>
+
+                <p>To extract information from the AOD data format, a module called <a href="https://github.com/xondikoi03/CMS-OpenData-Pipeline/blob/main/AOD2FunAOD/src/MasterNTupleMaker.cc">EDAnalyzer</a> is written that allow read-only acecss to the Event. It is written in C++. The following information is then writes the following information to the FunAOD: 
+                    <ol>
+                        <li> Particle Flow Candidates </li>
+                        <li> Reconstructed Jets </li>
+                        <li> Reconstructed Muons </li>
+                        <li> Reconstructed Electrons </li>
+                        <li> Reconstructed Photons </li>
+                        <li> Generator-Level Particles (only AODSIM) </li>
+                        <li> Generator-Level Jets (only AODSIM) </li>
+                    </ol>
+                </p>
+
+                <h4 id="edAnalyzer2"> EDAnalyzer: miniAOD2FunAOD </h4>
+
+                <p>To extract information from the AOD data format, a module called <a href="https://github.com/xondikoi03/CMS-OpenData-Pipeline/blob/main/miniAOD2FunAOD/src/miniNtupleMaker.cc">EDAnalyzer</a> is written that allow read-only acecss to the Event. It is written in C++. The following information is then writes the following information to the FunAOD: 
+                    <ol>
+                        <li> Reconstructed Jets </li>
+                        <li> Reconstructed Muons </li>
+                        <li> Reconstructed Electrons </li>
+                        <li> Reconstructed Photons </li>
+                        <li> Generator-Level Particles (only miniAODSIM) </li>
+                        <li> Generator-Level Jets (only miniAODSIM) </li>
+                    </ol>
+                </p>
+                
+                <h4 id="cms-config"> CMS configuration files</h4>
+
+                <p>The CMS configuration files define the EDAnalyzer modules to be loaded, the configurable parameters and the order the events will run. The configuration files are written in Python. In this particular pipeline the CMS Configuration file defines the following:
+                    <ol> 
+                        <li> Input AOD/AODSIM or miniAOD/miniAODSIM file to be accessed in the CMS open database. </li>
+                        <li> Detector alignment and caliberation (AlCa) modules.</li>
+                        <li> Number of events to analyze.</li>
+                        <li> Whether it is a collision or simulated dataset.</li>
+                        <li> The center of mass energy of collision (7 TeV or 8 TeV - only for AOD2FunAOD). </li>
+                        <li> Output FunAOD file. </li>
+                    </ol>
+
+                    The configuration files are executed using cmsRun, a CMSSW executable that loads all the required modules during runtime.
+                </p>
+                
+                <h4 id="funAOD">The flat Ntuple: FunAOD</h4>
+                <p>
+                    The output file produced by the pipeline is a flat Ntuple called FunAOD which is a ROOT flat tree. A flat tree is a structure that can be read by standalone ROOT, without requiring any additional libraries. This particular flat tree stores event level information of reconstructed as well as generator level particles. This FunAOD can be directly used for analysis of physics objects. This particular flat tree contains leaves which stores all the properties of the particles extracted from AOD or miniAOD. The FunAOD has a structure similar to the <a href="https://iopscience.iop.org/article/10.1088/1742-6596/1525/1/012038">nanoAOD</a> format, but is much simpler in structure. The average size of the FunAOD is 0.5 - 1.5 GB (depending upon the number of events).
+                </p>
+
+                <h2 id="getting-started"> Getting Started </h2>
+                <p> 
+                    Before you start using the CMS-OpenData-Pipeline to make FunAODs:
+                    <ul>
+                        <li> Take a look at the <a href="">requirements</a>
+                        </li>
+                        <li> Take a tour through setting up docker containers in <a href="">setup and installation</a>
+                        </li>
+                        <li>Also take a look at the example plotting $\mu^{+}\mu^{-}$ invariant mass.
+                        </li>  
+                    </ul>     
+                </p>
+
+                <h2 id="setup"> Setup and Installation </h2>
+
+                <p> 
+                    The CMS-OpenData-Pipeline has certain requirements:
+
+                    <ol>
+                        <li> Docker should be up and running in the local machine. Alternatively, CMS-OpenData Virtual Machine works as well. (It is recommended not to use the VM as it is painfully slow) </li>
+
+                        <li> CMS Offline Software Framework - <a href="https://github.com/cms-sw/cmssw">CMSSW</a> should be set up in the docker container. </li>
+
+                        <li>MiniConda or AnaConda should be installed in your local system. </li>
+
+                        <li> ROOT(6.20 or higher) must be installed in the local machine. </li>
+
+                        <li> Linux-based systems are preferred, Windows systems are not recommended as docker has compatibility issues with Windows. </li>
+                    </ol>
+
+                    <a href="https://www.docker.com/">Docker</a> is a container tool that provides the user with a snapshot of a specific CMSSW version to work on your local machine without the requirement for lxplus or a CERN account. For Run 1, the docker container containing the <code>CMSSW_5_3_32</code> needs to be installed and for Run 2, the docker container containing the <code>CMSSW_7_6_7</code> needs to be installed.
+                </p>
+                <h3 id="c532"> Setting up the Docker container: CMSSW_5_3_32 </h3>
+
+                <p> 
+                   The <code>CMSSW_5_3_32</code> container image is available on <a href="https://hub.docker.com/r/cmsopendata/cmssw_5_3_32-slc6_amd64_gcc472">DockerHub.</a> The installation process for the software environment is discussed below: 
+                   <ol> 
+                    <li> Fetch the docker container on the local machine using: </li>
+                    <div class="code-block">
+                        <pre><code>docker pull cmsopendata/cmssw_5_3_32-slc6_amd64_gcc472</code></pre>
+                    </div>
+
+                    <li> Now let's mount a common file area for sharing files between the docker container and the local machine: </li>
+
+                    <div class="code-block">
+                        <pre><code>export workpath=$PWD</code>
+<code>mkdir cmsopendatachmod -R 777</code> 
+<code>cmsopendata</code></pre>
+                    </div>
+
+                    <li> Then to run the docker container using the following command: </li>
+
+                    <div class="code-block">
+                        <pre><code>docker run -it --name CMSSW_5_3_32 -P -p 5902:5902 -p 6080:6080 -v $workpath/cmsopendata:/code cmsopendata/cmssw_5_3_32-slc6_amd64_gcc472:latest /bin/bash</code></pre>
+                    </div>
+
+                    <li> The name given to the container is <code>CMSSW_5_3_32</code>. After the fetching is done one shall be able to access the CMS offline software environment from here. </li>
+
+                    <div class="wiki">
+                        <blockquote> 
+                           <strong>Note:</strong> Once one uses the <code>exit</code> command or closes the terminal mistakenly (which we all do a lot of times), the Docker container needs to be started again.
+                        </blockquote>
+                    </div>
+                    <li> To start the Docker container again:</li>
+                    <div class="code-block">
+                        <pre><code>docker start -i CMSSW_5_3_32</code></pre>
+                    </div>
+                    <div class="wiki">
+                        <blockquote> 
+                           <strong>Note:</strong> To start the docker container, one is compelled to type this command in their terminal over and over again. So, it is better if one makes a terminal shortcut command or an alias in the <code>.bashrc</code> (or your shell's read-command file) file. Locate the <code>.bashrc</code> file in the <code>/home/</code> directory and add the following lines to the file:
+                        </blockquote>            
+                    </div>
+                    <div class="code-block">
+                        <pre><code>alias c532="docker start -i CMSSW_5_3_32"</code></pre>
+                    </div>
+                    Now, one just has to use the command <code>c532</code> to start the docker container.
+                </ol>
+
+                </p>
+
+                <h3 id="c767"> Setting up the Docker container: CMSSW_7_6_7 </h3>
+
+                <p> 
+                   The <code>CMSSW_7_6_7</code> container image is available on <a href="https://hub.docker.com/r/cmsopendata/cmssw_7_6_7-slc6_amd64_gcc493">DockerHub.</a> The installation process for the software environment is discussed below: 
+                   <ol> 
+                    <li> Fetch the docker container on the local machine using: </li>
+                    <div class="code-block">
+                        <pre><code>docker pull cmsopendata/cmssw_7_6_7-slc6_amd64_gcc493</code></pre>
+                    </div>
+
+                    <li> Now let's mount a common file area for sharing files between the docker container and the local machine: </li>
+
+                    <div class="code-block">
+                        <pre><code>export workpath=$PWD</code>
+<code>mkdir cmsopendatachmod -R 777</code> 
+<code>cmsopendata</code></pre>
+                    </div>
+
+                    <li> Then to run the docker container using the following command: </li>
+
+                    <div class="code-block">
+                        <pre><code>docker run -it --name CMSSW_7_6_7 -P -p 5901:5901 -p 6081:6081 -v $workpath/cmsopendata:/code cmsopendata/cmssw_7_6_7-slc6_amd64_gcc493:latest /bin/bash</code></pre>
+                    </div>
+
+                    <li> The name given to the container is <code>CMSSW_7_6_7</code>. After the fetching is done one shall be able to access the CMS offline software environment from here. </li>
+
+                    <div class="wiki">
+                        <blockquote> 
+                           <strong>Note:</strong> Once one uses the <code>exit</code> command or closes the terminal mistakenly (which we all do a lot of times), the Docker container needs to be started again.
+                        </blockquote>
+                    </div>
+                    <li> To start the Docker container again:</li>
+                    <div class="code-block">
+                        <pre><code>docker start -i CMSSW_7_6_7</code></pre>
+                    </div>
+                    <div class="wiki">
+                        <blockquote> 
+                           <strong>Note:</strong> To start the docker container, one is compelled to type this command in their terminal over and over again. So, it is better if one makes a terminal shortcut command or an alias in the <code>.bashrc</code> (or your shell's read-command file) file. Locate the <code>.bashrc</code> file in the <code>/home/</code> directory and add the following lines to the file:
+                        </blockquote>            
+                    </div>
+                    <div class="code-block">
+                        <pre><code>alias c767="docker start -i CMSSW_7_6_7"</code></pre>
+                    </div>
+                    Now, one just has to use the command <code>c767</code> to start the docker container.
+                </ol>
+
+                </p>  
+                
+                <h2 id="usage"> Usage and Application </h2>
+                <p> The CMS-OpenData-Pipeline is developed by the Experimental High Energy Physics group at IISER-Pune. The pipeline is capable of making custom Ntuples called FunAODs consisting of high-level physics objects (for e.g: electrons, muons, jets) from Run 1 AODs and Run 2 miniAODs. </p>
+
+                <h3 id="fetch"> Setting up and the pipeline in the Docker container </h3>
+
+                <p>
+                    To set up the CMS-OpenData-Pipeline in the docker container, clone the GitHub repository onto the Docker container. The repository should be cloned into the <code>/code/CMSSW_5_3_32/src/</code> directory in the Docker container. The following command shall clone the repository: 
+                    <div class="code-block">
+                        <pre><code>git clone https://github.com/xondikoi03/CMS-OpenData-Pipeline.git</code></pre>
+                    </div>
+                </p>
+                
+                <h3 id="makeFun"> Making a FunAOD </h3>
+                <p> 
+                    Let us see how can we make a simple FunAOD:
+
+                    <ol> 
+                        <li> Navigate to the CMS-OpenData-Pipeline’s AOD2FunAOD directory. The directory path is given as: <code>/code/CMSSW_5_3_32/src/CMS-OpenData-Pipeline/AOD2FunAOD/Test.</code> </li>
+                        <li> 
+                            In this directory you’ll find a python file named testntuple.py, which we will be using for our test problem. There shall also be a C++ source file named <code>testntuplemaker.cc</code> that will be used by the python file in the <code>../src/ directory</code>. You can access these files and make changes later.
+                        </li>
+                        <li> 
+                            Now, let us produce a FunAOD that will contain high-level muons. For that we’ll have to compile the source code before we can exeute it. To compile the files, one has to run the following command:
+                        </li>
+                        <div class="code-block">
+                        <pre><code>scram b -j 8</code></pre>
+                        </div>
+                        <li> After successful compilation, the FunAOD can be made using the following command: </li>
+                         <div class="code-block">
+                        <pre><code>cmsRun testntuple.py nEvents=5000 isData=False</code></pre>
+                        </div>
+                        This will run the python file and produce an FunAOD named <code>testoutput.root</code>. This file can be accessed through TBrowser in ROOT.
+                        <div class="wiki">
+                        <blockquote> 
+                           <strong>Note:</strong> To run over all events, set <code>nEvents=-1</code>
+                        </blockquote>            
+                        </div>
+                    </ol>
+                 Congratulations, we’ve now successfully created the first FunAOD containing muon information of 5000 events from a <a href="https://opendata.cern.ch/record/7730">DYJetsToLL</a> simulated sample. Now, let’s take this FunAOD out of the docker container to the local machine. (ROOT doesn’t really work in the docker container, so it’s better to have in the local machine).       
+                </p>
+
+                <h3 id="example"> Example - Plotting the $\mu^{+}\mu^{-}$ invariant mass </h3>
+
+                <p>
+                    Now that we have created a FunAOD, let us make a dummy analysis using analysis files that can be found in the <code>AnalysisCodes</code> directory. A directory named <code>test_dimuon_mass</code> shall contain the a dummy analysis file. To run those files using ROOT in your local machine, do the following:
+
+                    <ol> 
+                        <li> Change directory to <code>test_dimuon_mass.</code> </li>
+                        <div class="code-block">
+                        <pre><code>cd AnalysisCodes/test_dimuon_mass/</code></pre>
+                        </div>
+                        <li> Initialise the ROOT terminal using: </li>
+                        <div class="code-block">
+                        <pre><code>root --web=off</code></pre>
+                        </div>
+                        <li>Compile the code from the ROOT terminal:</li>
+                        <div class="code-block">
+                        <pre><code>.L cmsAna.C+</code></pre>
+                        </div>
+                        <li>Execute the driver file using:</li>
+                        <div class="code-block">
+                        <pre><code>.x driver.C</code></pre>
+                        </div>
+                        <li>You can plot the $\mu^{-}\mu^{+}$ invariant mass by running the plotting script:</li>
+                        <div class="code-block">
+                        <pre><code>.x graphing.C</code></pre>
+                        </div>
+                        <li> You shall get a plot like shown below once you run the script. </li>
+                        <div style="text-align: center;">
+                            <img src="resources/test_dimu_mass.png" alt="Pipeline Flowchart" style="height: 400px;"> <br>
+                            <a style="color: var(--text-black);"> Figure: Invariant mass distribution of dimuon events</a>
+                        </div>
+                    </ol>
+                    That’s it, we’ve now plotted the $\mu^{+}\mu^{-}$ mass using the CMS-OpenData-Pipeline. Fun, isn’t it? One can thus do even more complex analyses using the CMS-OpenData-Pipeline. 
+                    <div class="wiki">
+                        <blockquote> 
+                           <strong>Note:</strong> A more detailed <a href="https://github.com/xondikoi03/CMS-OpenData-Pipeline/blob/main/Manual.pdf"> manual </a> for Run 1 AOD2FunAOD is available.
+                        </blockquote>            
+                    </div>
+                    
+                </p>
+            </article>
+        </section>
+
+
+        <!-- Footer Section -->
+        <footer class="site-footer">
+        <p>&copy; xondikoi - 2025</p>
+        </footer>
+
+        <script type="text/javascript" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+    </body>
+
+</html>
