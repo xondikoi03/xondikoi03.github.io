@@ -692,3 +692,50 @@ body {
     padding: 1rem 0;
   }
 }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .wiki-layout {
+    flex-direction: column;
+  }
+
+  .wiki-sidebar {
+    position: relative;
+    top: auto;
+    width: 100%;
+  }
+
+  .wiki-content {
+    width: 100%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .wiki-content {
+    padding: 1rem;
+    font-size: 15px;
+  }
+
+  .wiki-content h2 {
+    font-size: 24px;
+  }
+
+  .wiki-content h3 {
+    font-size: 20px;
+  }
+
+  .wiki-content code {
+    font-size: 13px;
+  }
+
+  .wiki blockquote {
+    font-size: 14px;
+    padding: 0.5rem;
+  }
+
+  .copy-button {
+    font-size: 11px;
+    padding: 0.2rem 0.5rem;
+  }
+}
