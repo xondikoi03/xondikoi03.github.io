@@ -114,7 +114,7 @@
                 
                 <h4 id="cms-config"> CMS configuration files</h4>
 
-                <p>The CMS configuration files define the EDAnalyzer modules to be loaded, the configurable parameters and the order the events will run. The configuration files are written in Python. In this particular pipeline the CMS Configuration file defines the following:
+                <p>The CMS configuration files define the EDAnalyzer modules to be loaded, the configurable parameters and the order the events will run. The configuration files are written in Python. In this particular pipeline the CMS Configuration file defines the following:</p>
                     <ol> 
                         <li> Input AOD/AODSIM or miniAOD/miniAODSIM file to be accessed in the CMS open database. </li>
                         <li> Detector alignment and caliberation (AlCa) modules.</li>
@@ -123,9 +123,7 @@
                         <li> The center of mass energy of collision (7 TeV or 8 TeV - only for AOD2FunAOD). </li>
                         <li> Output FunAOD file. </li>
                     </ol>
-
-                    The configuration files are executed using cmsRun, a CMSSW executable that loads all the required modules during runtime.
-                </p>
+                    <p>The configuration files are executed using cmsRun, a CMSSW executable that loads all the required modules during runtime.</p>
                 
                 <h4 id="funAOD">The flat Ntuple: FunAOD</h4>
                 <p>
@@ -149,6 +147,7 @@
 
                 <p> 
                     The CMS-OpenData-Pipeline has certain requirements:
+                    </p>
 
                     <ol>
                         <li> Docker should be up and running in the local machine. Alternatively, CMS-OpenData Virtual Machine works as well. (It is recommended not to use the VM as it is painfully slow) </li>
@@ -161,7 +160,7 @@
 
                         <li> Linux-based systems are preferred, Windows systems are not recommended as docker has compatibility issues with Windows. </li>
                     </ol>
-
+                <p>        
                     <a href="https://www.docker.com/">Docker</a> is a container tool that provides the user with a snapshot of a specific CMSSW version to work on your local machine without the requirement for lxplus or a CERN account. For Run 1, the docker container containing the <code>CMSSW_5_3_32</code> needs to be installed and for Run 2, the docker container containing the <code>CMSSW_7_6_7</code> needs to be installed.
                 </p>
                 <h3 id="c532"> Setting up the Docker container: CMSSW_5_3_32 </h3>
@@ -274,7 +273,7 @@
                 
                 <h3 id="makeFun"> Making a FunAOD </h3>
                 <p> 
-                    Let us see how can we make a simple FunAOD:
+                    Let us see how can we make a simple FunAOD:</p>
 
                     <ol> 
                         <li> Navigate to the CMS-OpenData-Pipeline’s AOD2FunAOD directory. The directory path is given as: <code>/code/CMSSW_5_3_32/src/CMS-OpenData-Pipeline/AOD2FunAOD/Test.</code> </li>
@@ -298,13 +297,13 @@
                         </blockquote>            
                         </div>
                     </ol>
-                 Congratulations, we’ve now successfully created the first FunAOD containing muon information of 5000 events from a <a href="https://opendata.cern.ch/record/7730">DYJetsToLL</a> simulated sample. Now, let’s take this FunAOD out of the docker container to the local machine. (ROOT doesn’t really work in the docker container, so it’s better to have in the local machine).       
+                <p> Congratulations, we’ve now successfully created the first FunAOD containing muon information of 5000 events from a <a href="https://opendata.cern.ch/record/7730">DYJetsToLL</a> simulated sample. Now, let’s take this FunAOD out of the docker container to the local machine. (ROOT doesn’t really work in the docker container, so it’s better to have in the local machine).       
                 </p>
 
                 <h3 id="example"> Example - Plotting the $\mu^{+}\mu^{-}$ invariant mass </h3>
 
                 <p>
-                    Now that we have created a FunAOD, let us make a dummy analysis using analysis files that can be found in the <code>AnalysisCodes</code> directory. A directory named <code>test_dimuon_mass</code> shall contain the a dummy analysis file. To run those files using ROOT in your local machine, do the following:
+                    Now that we have created a FunAOD, let us make a dummy analysis using analysis files that can be found in the <code>AnalysisCodes</code> directory. A directory named <code>test_dimuon_mass</code> shall contain the a dummy analysis file. To run those files using ROOT in your local machine, do the following: </p>
 
                     <ol> 
                         <li> Change directory to <code>test_dimuon_mass.</code> </li>
@@ -333,7 +332,7 @@
                             <a style="color: var(--text-black);"> Figure: Invariant mass distribution of dimuon events</a>
                         </div>
                     </ol>
-                    That’s it, we’ve now plotted the $\mu^{+}\mu^{-}$ mass using the CMS-OpenData-Pipeline. Fun, isn’t it? One can thus do even more complex analyses using the CMS-OpenData-Pipeline. 
+                    <p>That’s it, we’ve now plotted the $\mu^{+}\mu^{-}$ mass using the CMS-OpenData-Pipeline. Fun, isn’t it? One can thus do even more complex analyses using the CMS-OpenData-Pipeline. 
                     <div class="wiki">
                         <blockquote> 
                            <strong>Note:</strong> A more detailed <a href="https://github.com/xondikoi03/CMS-OpenData-Pipeline/blob/main/Manual.pdf"> manual </a> for Run 1 AOD2FunAOD is available.
