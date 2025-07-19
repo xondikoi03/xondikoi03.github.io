@@ -157,6 +157,13 @@
 <!-- Instagram link -->
 
 <script async src="https://www.instagram.com/embed.js"></script>
+<script>
+  window.onload = function() {
+    if (window.instgrm) {
+      window.instgrm.Embeds.process();
+    }
+  }
+</script>
 
 
 </body>
